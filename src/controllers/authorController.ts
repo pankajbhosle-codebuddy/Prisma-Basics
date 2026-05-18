@@ -5,7 +5,11 @@ import { Request, Response } from "express";
 
 export const createAuthor = async (req: Request, res: Response) => {
   const username: string = req.body.username;
-
+  
+  if (!username) {
+    return res.status(400).send("Username is required");
+  }
+  
   const isExistsingAuthor = await prisma.author.findUnique({
     where: {
       username,
@@ -13,9 +17,6 @@ export const createAuthor = async (req: Request, res: Response) => {
   });
   if (isExistsingAuthor) {
     return res.status(400).send("Author already exists");
-  }
-  if (!username) {
-    return res.status(400).send("Username is required");
   }
 
   try {

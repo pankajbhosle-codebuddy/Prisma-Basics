@@ -11,9 +11,6 @@ RUN pnpm install
 
 COPY . .
 
-ARG DATABASE_URL
-ENV DATABASE_URL=$DATABASE_URL
-
 RUN pnpm prisma generate
 
 RUN pnpm run build
